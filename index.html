@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ammar Nedal Satouf | AI Architect</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --neon-cyan: #00f5ff;
+            --neon-purple: #a855f7;
+            --neon-magenta: #ec4899;
+            --neon-blue: #3b82f6;
+            --gold: #d4af37;
+            --gold-light: #f4e4bc;
+            --dark-bg: #050508;
+            --dark-card: #0a0a12;
+            --luxury-gradient: linear-gradient(135deg, #d4af37, #f4e4bc, #d4af37);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--dark-bg);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        body.rtl {
+            font-family: 'Cairo', sans-serif;
+            direction: rtl;
+        }
+
+        .font-orbitron {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .font-arabic {
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .font-luxury {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Particle Canvas */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Luxury Background */
+        .neural-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(0, 245, 255, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(168, 85, 247, 0.05) 0%, transparent 60%),
+                radial-gradient(ellipse at 90% 10%, rgba(212, 175, 55, 0.04) 0%, transparent 40%);
+            z-index: 0;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--gold), var(--neon-purple));
+            border-radius: 3px;
+        }
+
+        /* Gold Text Effects */
+        .gold-text {
+            background: var(--luxury-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .neon-text-cyan {
+            text-shadow: 
+                0 0 5px var(--neon-cyan),
+                0 0 10px var(--neon-cyan),
+                0 0 20px var(--neon-cyan),
+                0 0 40px var(--neon-cyan);
+        }
+
+        .neon-text-purple {
+            text-shadow: 
+                0 0 5px var(--neon-purple),
+                0 0 10px var(--neon-purple),
+                0 0 20px var(--neon-purple);
+        }
+
+        .neon-text-gradient {
+            background: linear-gradient(135deg, var(--gold), var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Luxury Glow Border */
+        .glow-border {
+            position: relative;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .glow-border::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, var(--gold), var(--neon-cyan), var(--neon-purple));
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            filter: blur(15px);
+        }
+
+        .glow-border:hover::before {
+            opacity: 0.5;
+        }
+
+        /* Premium Glassmorphism */
+        .glass {
+            background: rgba(10, 10, 18, 0.8);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .glass-luxury {
+            background: linear-gradient(135deg, rgba(10, 10, 18, 0.9), rgba(20, 20, 30, 0.8));
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        /* Animated Gradient Border */
+        @keyframes borderRotate {
+            0% { --angle: 0deg; }
+            100% { --angle: 360deg; }
+        }
+
+        @property --angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        .animated-border {
+            position: relative;
+            background: var(--dark-card);
+            border-radius: 24px;
+        }
+
+        .animated-border::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            background: conic-gradient(from var(--angle), var(--gold), var(--neon-cyan), var(--neon-purple), var(--gold));
+            border-radius: inherit;
+            z-index: -1;
+            animation: borderRotate 6s linear infinite;
+        }
+
+        .animated-border::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--dark-card);
+            border-radius: inherit;
+            z-index: -1;
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(3deg); }
+        }
+
+        .float-animation {
+            animation: float 8s ease-in-out infinite;
+        }
+
+        /* Luxury Pulse Animation */
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.3), 0 0 60px rgba(168, 85, 247, 0.2); }
+            50% { box-shadow: 0 0 50px rgba(212, 175, 55, 0.5), 0 0 100px rgba(168, 85, 247, 0.3); }
+        }
+
+        .pulse-glow {
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
+        /* Data Stream Animation */
+        @keyframes dataStream {
+            0% { transform: translateY(-100%); opacity: 0; }
+            50% { opacity: 0.6; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        .data-stream {
+            position: absolute;
+            width: 1px;
+            height: 150px;
+            background: linear-gradient(180deg, transparent, var(--gold), transparent);
+            animation: dataStream 4s linear infinite;
+        }
+
+        /* Profile Image Styling */
+        .profile-image-container {
+            position: relative;
+            width: 380px;
+            height: 380px;
+        }
+
+        .profile-image-wrapper {
+            width: 340px;
+            height: 340px;
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+            border: 4px solid transparent;
+            background: linear-gradient(var(--dark-card), var(--dark-card)) padding-box,
+                        linear-gradient(135deg, var(--gold), var(--neon-cyan), var(--neon-purple)) border-box;
+            box-shadow: 
+                0 0 40px rgba(212, 175, 55, 0.3),
+                0 0 80px rgba(168, 85, 247, 0.2),
+                inset 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .profile-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: contrast(1.05) brightness(1.02);
+        }
+
+        .profile-glow {
+            position: absolute;
+            inset: -20px;
+            background: conic-gradient(from var(--angle), var(--gold), var(--neon-cyan), var(--neon-purple), var(--gold));
+            border-radius: 50%;
+            z-index: -1;
+            animation: borderRotate 8s linear infinite;
+            filter: blur(30px);
+            opacity: 0.4;
+        }
+
+        /* Skill Card Hover */
+        .skill-card {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-12px) scale(1.03);
+            border-color: rgba(212, 175, 55, 0.4);
+        }
+
+        .skill-icon {
+            transition: all 0.4s ease;
+        }
+
+        .skill-card:hover .skill-icon {
+            transform: rotateY(360deg) scale(1.1);
+            filter: drop-shadow(0 0 15px var(--gold));
+        }
+
+        /* Project Card */
+        .project-card {
+            transition: all 0.5s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.5),
+                0 0 40px rgba(212, 175, 55, 0.15);
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+
+        /* Social Icon */
+        .social-icon {
+            transition: all 0.4s ease;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.3);
+            border-color: rgba(212, 175, 55, 0.5);
+        }
+
+        /* Language Toggle */
+        .lang-toggle {
+            position: relative;
+            width: 90px;
+            height: 44px;
+            background: rgba(10, 10, 18, 0.9);
+            border-radius: 22px;
+            border: 2px solid var(--gold);
+            cursor: pointer;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+
+        .lang-toggle::before {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 36px;
+            height: 36px;
+            background: var(--luxury-gradient);
+            border-radius: 50%;
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .lang-toggle.rtl::before {
+            transform: translateX(44px);
+        }
+
+        /* Typewriter Effect */
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        .typewriter {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid var(--gold);
+            animation: typewriter 3s steps(40) 1s forwards, blink 0.8s infinite;
+        }
+
+        /* Nav Links */
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 1.25rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--luxury-gradient);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link:hover {
+            color: var(--gold);
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        /* Section Title */
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--luxury-gradient);
+            border-radius: 2px;
+        }
+
+        body.rtl .section-title::after {
+            left: auto;
+            right: 0;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        body.rtl .mobile-menu {
+            transform: translateX(-100%);
+        }
+
+        body.rtl .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        /* Smooth Section Transitions */
+        section {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 1s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Luxury Divider */
+        .luxury-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), var(--neon-purple), var(--gold), transparent);
+            opacity: 0.3;
+        }
+
+        /* Premium Button */
+        .btn-luxury {
+            background: linear-gradient(135deg, var(--gold), #c9a227);
+            color: #000;
+            font-weight: 700;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+            transition: all 0.4s ease;
+        }
+
+        .btn-luxury:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.5);
+        }
+
+        /* Stats Counter */
+        .stat-number {
+            background: var(--luxury-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Desktop Optimized Containers */
+        @media (min-width: 1280px) {
+            .container-xl {
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (min-width: 1536px) {
+            .container-xl {
+                max-width: 1600px;
+            }
+        }
+
+        /* Hero Section Desktop */
+        @media (min-width: 1024px) {
+            .hero-content {
+                padding: 0 5%;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .hero-content {
+                padding: 0 8%;
+                gap: 6rem;
+            }
+        }
+
+        /* Shimmer Effect */
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 3s infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Luxury Background -->
+    <div class="neural-bg"></div>
+    
+    <!-- Particle Canvas -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Data Streams -->
+    <div id="data-streams" class="fixed inset-0 pointer-events-none z-0 overflow-hidden"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass py-5 px-8">
+        <div class="container-xl mx-auto flex items-center justify-between">
+            <a href="#" class="font-orbitron text-2xl font-bold gold-text tracking-wider">
+                <span data-en="AMMAR" data-ar="عمّار">AMMAR</span>
+            </a>
+            
+            <div class="hidden lg:flex items-center gap-10">
+                <a href="#hero" class="nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
+                <a href="#about" class="nav-link" data-en="About" data-ar="نبذة عني">About</a>
+                <a href="#skills" class="nav-link" data-en="Skills" data-ar="المهارات">Skills</a>
+                <a href="#projects" class="nav-link" data-en="Projects" data-ar="المشاريع">Projects</a>
+                <a href="#contact" class="nav-link" data-en="Contact" data-ar="التواصل">Contact</a>
+            </div>
+
+            <div class="flex items-center gap-5">
+                <!-- Language Toggle -->
+                <div class="lang-toggle" id="langToggle" title="Toggle Language">
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-white">EN</span>
+                    <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold font-arabic text-white">ع</span>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="lg:hidden text-2xl text-gold-light">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu fixed top-0 right-0 h-full w-72 glass-luxury z-50 pt-24 px-8">
+        <button id="closeMobileMenu" class="absolute top-7 right-7 text-2xl text-gold-light">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="flex flex-col gap-8">
+            <a href="#hero" class="nav-link text-lg" data-en="Home" data-ar="الرئيسية">Home</a>
+            <a href="#about" class="nav-link text-lg" data-en="About" data-ar="نبذة عني">About</a>
+            <a href="#skills" class="nav-link text-lg" data-en="Skills" data-ar="المهارات">Skills</a>
+            <a href="#projects" class="nav-link text-lg" data-en="Projects" data-ar="المشاريع">Projects</a>
+            <a href="#contact" class="nav-link text-lg" data-en="Contact" data-ar="التواصل">Contact</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="hero" class="min-h-screen flex items-center justify-center relative z-10 pt-24 visible">
+        <div class="container-xl mx-auto px-8 hero-content flex flex-col lg:flex-row items-center gap-16 xl:gap-24">
+            <!-- Left Content -->
+            <div class="flex-1 text-center lg:text-left max-w-2xl">
+                <p class="text-amber-400 font-medium mb-6 tracking-[0.3em] uppercase text-sm" data-en="Welcome to my portfolio" data-ar="مرحباً بكم في ملفي الشخصي">Welcome to my portfolio</p>
+                
+                <h1 class="font-orbitron text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight">
+                    <span class="block text-white mb-2" data-en="I'm" data-ar="أنا">I'm</span>
+                    <span class="neon-text-gradient block">Ammar Nedal Satouf</span>
+                </h1>
+                
+                <h2 class="font-arabic text-2xl md:text-3xl xl:text-4xl text-purple-400 mb-8 neon-text-purple">
+                    عمّار نضال سطوف
+                </h2>
+
+                <div class="h-16 mb-10">
+                    <p class="text-xl md:text-2xl xl:text-3xl text-gray-300 typewriter font-light" data-en="AI Architect & Machine Learning Engineer" data-ar="مهندس معماري في الذكاء الاصطناعي">AI Architect & Machine Learning Engineer</p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start">
+                    <a href="#projects" class="btn-luxury px-10 py-5 rounded-full text-lg">
+                        <span data-en="View Projects" data-ar="عرض المشاريع">View Projects</span>
+                    </a>
+                    <a href="#contact" class="px-10 py-5 rounded-full border-2 border-amber-500 text-amber-400 font-semibold hover:bg-amber-500 hover:text-black transition-all duration-400 transform hover:scale-105 text-lg">
+                        <span data-en="Get in Touch" data-ar="تواصل معي">Get in Touch</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Content - Profile Image -->
+            <div class="flex-1 flex justify-center items-center">
+                <div class="profile-image-container float-animation">
+                    <div class="profile-glow"></div>
+                    <div class="profile-image-wrapper pulse-glow">
+                        <img src="logo.png" alt="Ammar Nedal Satouf" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-gradient-to-br from-amber-500/20 to-purple-600/20 flex items-center justify-center\'><span class=\'font-orbitron text-7xl gold-text\'>A</span></div>';">
+                    </div>
+                    
+                    <!-- Floating Elements -->
+                    <div class="absolute -top-6 -right-6 w-20 h-20 glass-luxury rounded-2xl flex items-center justify-center float-animation" style="animation-delay: 0s;">
+                        <i class="fab fa-python text-4xl text-amber-400"></i>
+                    </div>
+                    <div class="absolute -bottom-6 -left-6 w-20 h-20 glass-luxury rounded-2xl flex items-center justify-center float-animation" style="animation-delay: 1.5s;">
+                        <i class="fas fa-brain text-4xl text-purple-400"></i>
+                    </div>
+                    <div class="absolute top-1/2 -right-10 w-16 h-16 glass-luxury rounded-xl flex items-center justify-center float-animation" style="animation-delay: 3s;">
+                        <i class="fas fa-network-wired text-2xl text-cyan-400"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
+            <span class="text-sm text-gray-500 tracking-widest uppercase" data-en="Scroll Down" data-ar="اسحب للأسفل">Scroll Down</span>
+            <div class="w-7 h-12 border-2 border-amber-500 rounded-full flex justify-center p-2">
+                <div class="w-1.5 h-3 bg-amber-400 rounded-full animate-bounce"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="min-h-screen flex items-center py-28 relative z-10">
+        <div class="container-xl mx-auto px-8">
+            <div class="text-center mb-20">
+                <h2 class="font-orbitron text-4xl md:text-5xl xl:text-6xl font-bold section-title neon-text-gradient" data-en="About Me" data-ar="نبذة عني">About Me</h2>
+                <p class="font-arabic text-2xl xl:text-3xl text-purple-400 mt-6">نبذة عني</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-16 xl:gap-24 items-center">
+                <!-- Profile Image Area -->
+                <div class="flex justify-center order-2 lg:order-1">
+                    <div class="relative">
+                        <div class="w-96 h-96 xl:w-[450px] xl:h-[450px] rounded-3xl animated-border flex items-center justify-center overflow-hidden">
+                            <img src="logo.png" alt="Ammar Nedal Satouf" class="w-[calc(100%-16px)] h-[calc(100%-16px)] object-cover rounded-3xl" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-gradient-to-br from-amber-500/10 to-purple-600/10 flex items-center justify-center\'><i class=\'fas fa-brain text-9xl gold-text\'></i></div>';">
+                        </div>
+                        <!-- Floating Tech Icons -->
+                        <div class="absolute -top-5 -right-5 w-20 h-20 glass-luxury rounded-2xl flex items-center justify-center float-animation shadow-2xl" style="animation-delay: 0s;">
+                            <i class="fab fa-python text-4xl text-amber-400"></i>
+                        </div>
+                        <div class="absolute -bottom-5 -left-5 w-20 h-20 glass-luxury rounded-2xl flex items-center justify-center float-animation shadow-2xl" style="animation-delay: 1s;">
+                            <i class="fas fa-robot text-4xl text-purple-400"></i>
+                        </div>
+                        <div class="absolute top-1/2 -right-10 w-16 h-16 glass-luxury rounded-xl flex items-center justify-center float-animation shadow-2xl" style="animation-delay: 2s;">
+                            <i class="fas fa-microchip text-3xl text-cyan-400"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- About Text -->
+                <div class="glass-luxury rounded-3xl p-10 xl:p-14 glow-border order-1 lg:order-2">
+                    <div id="about-en" class="space-y-8">
+                        <p class="text-lg xl:text-xl text-gray-300 leading-relaxed">
+                            I am <span class="gold-text font-semibold">Ammar Nedal Satouf</span>, a passionate AI Architect and Machine Learning Engineer with a deep commitment to pushing the boundaries of artificial intelligence. My expertise spans across deep learning, neural network architectures, and building intelligent systems that solve real-world problems.
+                        </p>
+                        <p class="text-lg xl:text-xl text-gray-300 leading-relaxed">
+                            With years of experience in developing cutting-edge AI solutions, I specialize in designing scalable machine learning pipelines, implementing state-of-the-art models, and transforming complex data into actionable insights. My mission is to harness the power of AI to create innovative solutions that drive technological advancement.
+                        </p>
+                    </div>
+
+                    <div id="about-ar" class="space-y-8 hidden font-arabic text-right">
+                        <p class="text-lg xl:text-xl text-gray-300 leading-relaxed">
+                            أنا <span class="gold-text font-semibold">عمّار نضال سطوف</span>، مهندس معماري في الذكاء الاصطناعي ومهندس تعلم آلي شغوف بدفع حدود الذكاء الاصطناعي. تمتد خبرتي عبر التعلم العميق، وهندسة الشبكات العصبية، وبناء الأنظمة الذكية التي تحل المشاكل الحقيقية.
+                        </p>
+                        <p class="text-lg xl:text-xl text-gray-300 leading-relaxed">
+                            مع سنوات من الخبرة في تطوير حلول الذكاء الاصطناعي المتطورة، أتخصص في تصميم خطوط أنابيب التعلم الآلي القابلة للتطوير، وتنفيذ أحدث النماذج، وتحويل البيانات المعقدة إلى رؤى قابلة للتنفيذ. مهمتي هي تسخير قوة الذكاء الاصطناعي لإنشاء حلول مبتكرة تدفع التقدم التكنولوجي.
+                        </p>
+                    </div>
+
+                    <!-- Luxury Divider -->
+                    <div class="luxury-divider my-10"></div>
+
+                    <!-- Stats -->
+                    <div class="grid grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <h3 class="font-orbitron text-4xl xl:text-5xl font-bold stat-number">5+</h3>
+                            <p class="text-gray-400 text-sm xl:text-base mt-2" data-en="Years Experience" data-ar="سنوات خبرة">Years Experience</p>
+                        </div>
+                        <div class="text-center">
+                            <h3 class="font-orbitron text-4xl xl:text-5xl font-bold stat-number">50+</h3>
+                            <p class="text-gray-400 text-sm xl:text-base mt-2" data-en="AI Projects" data-ar="مشروع ذكاء اصطناعي">AI Projects</p>
+                        </div>
+                        <div class="text-center">
+                            <h3 class="font-orbitron text-4xl xl:text-5xl font-bold stat-number">100+</h3>
+                            <p class="text-gray-400 text-sm xl:text-base mt-2" data-en="Models Trained" data-ar="نموذج مدرب">Models Trained</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-28 relative z-10">
+        <div class="container-xl mx-auto px-8">
+            <div class="text-center mb-20">
+                <h2 class="font-orbitron text-4xl md:text-5xl xl:text-6xl font-bold section-title neon-text-gradient" data-en="Skills & Expertise" data-ar="المهارات والخبرات">Skills & Expertise</h2>
+                <p class="font-arabic text-2xl xl:text-3xl text-purple-400 mt-6">المهارات والخبرات</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 xl:gap-10">
+                <!-- Skill Cards -->
+                <div class="skill-card glass-luxury rounded-3xl p-8 text-center glow-border cursor-pointer">
+                    <div class="skill-icon w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-amber-500/20 to-amber-500/5 flex items-center justify-center border border-amber-500/20">
+                        <i class="fas fa-brain text-4xl text-amber-400"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg xl:text-xl" data-en="Deep Learning" data-ar="التعلم العميق">Deep Learning</h3>
+                    <div class="mt-4 h-2 bg-gray-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-amber-400 to-purple-500 rounded-full shimmer" style="width: 95%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-card glass-luxury rounded-3xl p-8 text-center glow-border cursor-pointer">
+                    <div class="skill-icon w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-purple-500/20 to-purple-500/5 flex items-center justify-center border border-purple-500/20">
+                        <i class="fas fa-robot text-4xl text-purple-400"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg xl:text-xl" data-en="Machine Learning" data-ar="تعلم الآلة">Machine Learning</h3>
+                    <div class="mt-4 h-2 bg-gray-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-purple-400 to-pink-500 rounded-full shimmer" style="width: 92%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-card glass-luxury rounded-3xl p-8 text-center glow-border cursor-pointer">
+                    <div class="skill-icon w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-cyan-500/5 flex items-center justify-center border border-cyan-500/20">
+                        <i class="fas fa-network-wired text-4xl text-cyan-400"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg xl:text-xl" data-en="Neural Networks" data-ar="الشبكات العصبية">Neural Networks</h3>
+                    <div class="mt-4 h-2 bg-gray-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full shimmer" style="width: 90%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-card glass-luxury rounded-3xl p-8 text-center glow-border cursor-pointer">
+                    <div class="skill-icon w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-500/5 flex items-center justify-center border border-blue-500/20">
+                        <i class="fas fa-database text-4xl text-blue-400"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg xl:text-xl" data-en="Data Engineering" data-ar="هندسة البيانات">Data Engineering</h3>
+                    <div class="mt-4 h-2 bg-gray-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-blue-400 to-cyan-500 rounded-full shimmer" style="width: 88%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-card glass-luxury rounded-3xl p-8 text-center glow-border cursor-pointer">
+                    <div class="skill-icon w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-green-500/20 to-green-500/5 flex items-center justify-center border border-green-500/20">
+                        <i class="fas fa-comments text-4xl text-green-400"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg xl:text-xl" data-en="Prompt Engineering" data-ar="هندسة الأوامر">Prompt Engineering</h3>
+                    <div class="mt-4 h-2 bg-gray-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-green-400 to-emerald-500 rounded-full shimmer" style="width: 94%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-card glass-luxury rounded-3xl p-8 text-center glow-border cursor-pointer">
+                    <div class="skill-icon w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-yellow-500/20 to-yellow-500/5 flex items-center justify-center border border-yellow-500/20">
+                        <i class="fab fa-python text-4xl text-yellow-400"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg xl:text-xl" data-en="Python" data-ar="بايثون">Python</h3>
+                    <div class="mt-4 h-2 bg-gray-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full shimmer" style="width: 96%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-card glass-luxury rounded-3xl p-8 text-center glow-border cursor-pointer">
+                    <div class="skill-icon w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-orange-500/20 to-orange-500/5 flex items-center justify-center border border-orange-500/20">
+                        <i class="fas fa-fire text-4xl text-orange-400"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg xl:text-xl" data-en="TensorFlow/PyTorch" data-ar="تنسرفلو/بايتورش">TensorFlow/PyTorch</h3>
+                    <div class="mt-4 h-2 bg-gray-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-orange-400 to-red-500 rounded-full shimmer" style="width: 91%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-card glass-luxury rounded-3xl p-8 text-center glow-border cursor-pointer">
+                    <div class="skill-icon w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-indigo-500/5 flex items-center justify-center border border-indigo-500/20">
+                        <i class="fas fa-code text-4xl text-indigo-400"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg xl:text-xl" data-en="Full-Stack Dev" data-ar="تطوير متكامل">Full-Stack Dev</h3>
+                    <div class="mt-4 h-2 bg-gray-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-indigo-400 to-purple-500 rounded-full shimmer" style="width: 85%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-28 relative z-10">
+        <div class="container-xl mx-auto px-8">
+            <div class="text-center mb-20">
+                <h2 class="font-orbitron text-4xl md:text-5xl xl:text-6xl font-bold section-title neon-text-gradient" data-en="Featured Projects" data-ar="المشاريع المميزة">Featured Projects</h2>
+                <p class="font-arabic text-2xl xl:text-3xl text-purple-400 mt-6">المشاريع المميزة</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-10 xl:gap-12">
+                <!-- Project Card 1 -->
+                <div class="project-card glass-luxury rounded-3xl overflow-hidden glow-border">
+                    <div class="h-56 bg-gradient-to-br from-amber-500/20 to-purple-600/20 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-br from-amber-500/10 to-transparent"></div>
+                        <i class="fas fa-eye text-7xl text-amber-400 relative z-10"></i>
+                        <div class="absolute top-5 right-5 px-4 py-2 bg-amber-500/20 rounded-full text-xs text-amber-400 border border-amber-400/30 font-medium">
+                            Deep Learning
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="font-orbitron text-xl xl:text-2xl font-bold mb-3" data-en="Computer Vision System" data-ar="نظام الرؤية الحاسوبية">Computer Vision System</h3>
+                        <p class="text-gray-400 text-sm xl:text-base mb-5 leading-relaxed" data-en="Advanced object detection and recognition system using YOLO and transformer architectures." data-ar="نظام متقدم للكشف عن الأجسام والتعرف عليها باستخدام YOLO وهياكل المحولات.">Advanced object detection and recognition system using YOLO and transformer architectures.</p>
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <span class="px-4 py-1.5 bg-amber-500/10 rounded-full text-xs text-amber-400 border border-amber-500/20">Python</span>
+                            <span class="px-4 py-1.5 bg-purple-500/10 rounded-full text-xs text-purple-400 border border-purple-500/20">PyTorch</span>
+                            <span class="px-4 py-1.5 bg-cyan-500/10 rounded-full text-xs text-cyan-400 border border-cyan-500/20">YOLO</span>
+                        </div>
+                        <a href="#" class="inline-flex items-center gap-2 text-amber-400 hover:text-amber-300 transition-colors font-medium">
+                            <span data-en="View Project" data-ar="عرض المشروع">View Project</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 -->
+                <div class="project-card glass-luxury rounded-3xl overflow-hidden glow-border">
+                    <div class="h-56 bg-gradient-to-br from-purple-500/20 to-pink-600/20 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent"></div>
+                        <i class="fas fa-language text-7xl text-purple-400 relative z-10"></i>
+                        <div class="absolute top-5 right-5 px-4 py-2 bg-purple-500/20 rounded-full text-xs text-purple-400 border border-purple-400/30 font-medium">
+                            NLP
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="font-orbitron text-xl xl:text-2xl font-bold mb-3" data-en="AI Language Model" data-ar="نموذج لغة ذكاء اصطناعي">AI Language Model</h3>
+                        <p class="text-gray-400 text-sm xl:text-base mb-5 leading-relaxed" data-en="Custom fine-tuned LLM for specialized domain knowledge and multilingual support." data-ar="نموذج لغة كبير مخصص ومضبوط للمعرفة المتخصصة ودعم متعدد اللغات.">Custom fine-tuned LLM for specialized domain knowledge and multilingual support.</p>
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <span class="px-4 py-1.5 bg-purple-500/10 rounded-full text-xs text-purple-400 border border-purple-500/20">Transformers</span>
+                            <span class="px-4 py-1.5 bg-cyan-500/10 rounded-full text-xs text-cyan-400 border border-cyan-500/20">HuggingFace</span>
+                            <span class="px-4 py-1.5 bg-green-500/10 rounded-full text-xs text-green-400 border border-green-500/20">LangChain</span>
+                        </div>
+                        <a href="#" class="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors font-medium">
+                            <span data-en="View Project" data-ar="عرض المشروع">View Project</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 -->
+                <div class="project-card glass-luxury rounded-3xl overflow-hidden glow-border">
+                    <div class="h-56 bg-gradient-to-br from-pink-500/20 to-red-600/20 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-br from-pink-500/10 to-transparent"></div>
+                        <i class="fas fa-chart-line text-7xl text-pink-400 relative z-10"></i>
+                        <div class="absolute top-5 right-5 px-4 py-2 bg-pink-500/20 rounded-full text-xs text-pink-400 border border-pink-400/30 font-medium">
+                            Analytics
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="font-orbitron text-xl xl:text-2xl font-bold mb-3" data-en="Predictive Analytics" data-ar="التحليلات التنبؤية">Predictive Analytics</h3>
+                        <p class="text-gray-400 text-sm xl:text-base mb-5 leading-relaxed" data-en="Time-series forecasting system with advanced ML models for business intelligence." data-ar="نظام توقع السلاسل الزمنية مع نماذج تعلم آلي متقدمة لذكاء الأعمال.">Time-series forecasting system with advanced ML models for business intelligence.</p>
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <span class="px-4 py-1.5 bg-pink-500/10 rounded-full text-xs text-pink-400 border border-pink-500/20">Scikit-learn</span>
+                            <span class="px-4 py-1.5 bg-blue-500/10 rounded-full text-xs text-blue-400 border border-blue-500/20">TensorFlow</span>
+                            <span class="px-4 py-1.5 bg-yellow-500/10 rounded-full text-xs text-yellow-400 border border-yellow-500/20">Pandas</span>
+                        </div>
+                        <a href="#" class="inline-flex items-center gap-2 text-pink-400 hover:text-pink-300 transition-colors font-medium">
+                            <span data-en="View Project" data-ar="عرض المشروع">View Project</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 4 -->
+                <div class="project-card glass-luxury rounded-3xl overflow-hidden glow-border">
+                    <div class="h-56 bg-gradient-to-br from-green-500/20 to-emerald-600/20 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-br from-green-500/10 to-transparent"></div>
+                        <i class="fas fa-microchip text-7xl text-green-400 relative z-10"></i>
+                        <div class="absolute top-5 right-5 px-4 py-2 bg-green-500/20 rounded-full text-xs text-green-400 border border-green-400/30 font-medium">
+                            MLOps
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="font-orbitron text-xl xl:text-2xl font-bold mb-3" data-en="AutoML Pipeline" data-ar="خط أنابيب التعلم الآلي التلقائي">AutoML Pipeline</h3>
+                        <p class="text-gray-400 text-sm xl:text-base mb-5 leading-relaxed" data-en="End-to-end automated machine learning pipeline with model versioning and deployment." data-ar="خط أنابيب تعلم آلي تلقائي شامل مع إصدارات النماذج والنشر.">End-to-end automated machine learning pipeline with model versioning and deployment.</p>
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <span class="px-4 py-1.5 bg-green-500/10 rounded-full text-xs text-green-400 border border-green-500/20">MLflow</span>
+                            <span class="px-4 py-1.5 bg-orange-500/10 rounded-full text-xs text-orange-400 border border-orange-500/20">Docker</span>
+                            <span class="px-4 py-1.5 bg-blue-500/10 rounded-full text-xs text-blue-400 border border-blue-500/20">Kubernetes</span>
+                        </div>
+                        <a href="#" class="inline-flex items-center gap-2 text-green-400 hover:text-green-300 transition-colors font-medium">
+                            <span data-en="View Project" data-ar="عرض المشروع">View Project</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 5 -->
+                <div class="project-card glass-luxury rounded-3xl overflow-hidden glow-border">
+                    <div class="h-56 bg-gradient-to-br from-blue-500/20 to-indigo-600/20 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent"></div>
+                        <i class="fas fa-comment-dots text-7xl text-blue-400 relative z-10"></i>
+                        <div class="absolute top-5 right-5 px-4 py-2 bg-blue-500/20 rounded-full text-xs text-blue-400 border border-blue-400/30 font-medium">
+                            Chatbot
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="font-orbitron text-xl xl:text-2xl font-bold mb-3" data-en="AI Chat Assistant" data-ar="مساعد دردشة ذكي">AI Chat Assistant</h3>
+                        <p class="text-gray-400 text-sm xl:text-base mb-5 leading-relaxed" data-en="Intelligent conversational AI with RAG implementation and contextual understanding." data-ar="ذكاء اصطناعي محادثي ذكي مع تنفيذ RAG والفهم السياقي.">Intelligent conversational AI with RAG implementation and contextual understanding.</p>
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <span class="px-4 py-1.5 bg-blue-500/10 rounded-full text-xs text-blue-400 border border-blue-500/20">GPT-4</span>
+                            <span class="px-4 py-1.5 bg-purple-500/10 rounded-full text-xs text-purple-400 border border-purple-500/20">RAG</span>
+                            <span class="px-4 py-1.5 bg-cyan-500/10 rounded-full text-xs text-cyan-400 border border-cyan-500/20">Vector DB</span>
+                        </div>
+                        <a href="#" class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors font-medium">
+                            <span data-en="View Project" data-ar="عرض المشروع">View Project</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 6 -->
+                <div class="project-card glass-luxury rounded-3xl overflow-hidden glow-border">
+                    <div class="h-56 bg-gradient-to-br from-yellow-500/20 to-orange-600/20 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-transparent"></div>
+                        <i class="fas fa-image text-7xl text-yellow-400 relative z-10"></i>
+                        <div class="absolute top-5 right-5 px-4 py-2 bg-yellow-500/20 rounded-full text-xs text-yellow-400 border border-yellow-400/30 font-medium">
+                            Generative AI
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="font-orbitron text-xl xl:text-2xl font-bold mb-3" data-en="AI Image Generator" data-ar="مولد صور ذكي">AI Image Generator</h3>
+                        <p class="text-gray-400 text-sm xl:text-base mb-5 leading-relaxed" data-en="Custom diffusion model for generating high-quality images with style transfer capabilities." data-ar="نموذج انتشار مخصص لتوليد صور عالية الجودة مع إمكانيات نقل الأنماط.">Custom diffusion model for generating high-quality images with style transfer capabilities.</p>
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <span class="px-4 py-1.5 bg-yellow-500/10 rounded-full text-xs text-yellow-400 border border-yellow-500/20">Stable Diffusion</span>
+                            <span class="px-4 py-1.5 bg-red-500/10 rounded-full text-xs text-red-400 border border-red-500/20">ComfyUI</span>
+                            <span class="px-4 py-1.5 bg-purple-500/10 rounded-full text-xs text-purple-400 border border-purple-500/20">LoRA</span>
+                        </div>
+                        <a href="#" class="inline-flex items-center gap-2 text-yellow-400 hover:text-yellow-300 transition-colors font-medium">
+                            <span data-en="View Project" data-ar="عرض المشروع">View Project</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-28 relative z-10">
+        <div class="container-xl mx-auto px-8 max-w-5xl">
+            <div class="text-center mb-20">
+                <h2 class="font-orbitron text-4xl md:text-5xl xl:text-6xl font-bold section-title neon-text-gradient" data-en="Get In Touch" data-ar="تواصل معي">Get In Touch</h2>
+                <p class="font-arabic text-2xl xl:text-3xl text-purple-400 mt-6">تواصل معي</p>
+                <p class="text-gray-400 mt-8 max-w-2xl mx-auto text-lg" data-en="Let's collaborate on your next AI project. Feel free to reach out through any of these platforms." data-ar="لنتعاون في مشروعك القادم في الذكاء الاصطناعي. لا تتردد في التواصل عبر أي من هذه المنصات.">Let's collaborate on your next AI project. Feel free to reach out through any of these platforms.</p>
+            </div>
+
+            <!-- Social Links Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 mb-16">
+                <!-- Twitter/X -->
+                <a href="#" class="social-icon glass-luxury rounded-3xl p-8 text-center glow-border group">
+                    <i class="fab fa-x-twitter text-5xl text-gray-400 group-hover:text-white transition-colors mb-4"></i>
+                    <p class="text-sm text-gray-400 group-hover:text-amber-400 transition-colors font-medium">Twitter / X</p>
+                </a>
+
+                <!-- Instagram -->
+                <a href="#" class="social-icon glass-luxury rounded-3xl p-8 text-center glow-border group">
+                    <i class="fab fa-instagram text-5xl text-gray-400 group-hover:text-pink-500 transition-colors mb-4"></i>
+                    <p class="text-sm text-gray-400 group-hover:text-amber-400 transition-colors font-medium">Instagram</p>
+                </a>
+
+                <!-- YouTube -->
+                <a href="#" class="social-icon glass-luxury rounded-3xl p-8 text-center glow-border group">
+                    <i class="fab fa-youtube text-5xl text-gray-400 group-hover:text-red-500 transition-colors mb-4"></i>
+                    <p class="text-sm text-gray-400 group-hover:text-amber-400 transition-colors font-medium">YouTube</p>
+                </a>
+
+                <!-- GitHub -->
+                <a href="#" class="social-icon glass-luxury rounded-3xl p-8 text-center glow-border group">
+                    <i class="fab fa-github text-5xl text-gray-400 group-hover:text-white transition-colors mb-4"></i>
+                    <p class="text-sm text-gray-400 group-hover:text-amber-400 transition-colors font-medium">GitHub</p>
+                </a>
+
+                <!-- LinkedIn -->
+                <a href="#" class="social-icon glass-luxury rounded-3xl p-8 text-center glow-border group">
+                    <i class="fab fa-linkedin-in text-5xl text-gray-400 group-hover:text-blue-500 transition-colors mb-4"></i>
+                    <p class="text-sm text-gray-400 group-hover:text-amber-400 transition-colors font-medium">LinkedIn</p>
+                </a>
+
+                <!-- Telegram -->
+                <a href="#" class="social-icon glass-luxury rounded-3xl p-8 text-center glow-border group">
+                    <i class="fab fa-telegram text-5xl text-gray-400 group-hover:text-cyan-400 transition-colors mb-4"></i>
+                    <p class="text-sm text-gray-400 group-hover:text-amber-400 transition-colors font-medium">Telegram</p>
+                </a>
+
+                <!-- Email -->
+                <a href="#" class="social-icon glass-luxury rounded-3xl p-8 text-center glow-border group sm:col-span-2 md:col-span-2">
+                    <i class="fas fa-envelope text-5xl text-gray-400 group-hover:text-amber-400 transition-colors mb-4"></i>
+                    <p class="text-sm text-gray-400 group-hover:text-amber-400 transition-colors font-medium">Email</p>
+                </a>
+            </div>
+
+            <!-- CTA -->
+            <div class="text-center glass-luxury rounded-3xl p-12 animated-border">
+                <h3 class="font-orbitron text-2xl xl:text-3xl font-bold mb-5 gold-text" data-en="Ready to Build Something Amazing?" data-ar="مستعد لبناء شيء مذهل؟">Ready to Build Something Amazing?</h3>
+                <p class="text-gray-400 mb-8 text-lg" data-en="Let's discuss how AI can transform your ideas into reality." data-ar="دعنا نناقش كيف يمكن للذكاء الاصطناعي تحويل أفكارك إلى واقع.">Let's discuss how AI can transform your ideas into reality.</p>
+                <a href="mailto:#" class="btn-luxury inline-flex items-center gap-4 px-12 py-5 rounded-full text-lg">
+                    <i class="fas fa-paper-plane"></i>
+                    <span data-en="Send Message" data-ar="إرسال رسالة">Send Message</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-amber-500/10 relative z-10">
+        <div class="container-xl mx-auto px-8 text-center">
+            <div class="flex justify-center mb-6">
+                <img src="logo.png" alt="Ammar Nedal Satouf" class="w-16 h-16 rounded-full object-cover border-2 border-amber-500/50" onerror="this.style.display='none';">
+            </div>
+            <p class="font-orbitron text-xl gold-text mb-3">Ammar Nedal Satouf</p>
+            <p class="font-arabic text-purple-400 text-lg">عمّار نضال سطوف</p>
+            <div class="luxury-divider max-w-xs mx-auto my-6"></div>
+            <p class="text-gray-500 text-sm">© 2025 All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Particle System
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouseX = 0;
+        let mouseY = 0;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 1.5 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.speedY = (Math.random() - 0.5) * 0.3;
+                this.color = ['#d4af37', '#a855f7', '#00f5ff'][Math.floor(Math.random() * 3)];
+                this.opacity = Math.random() * 0.4 + 0.1;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // Mouse interaction
+                const dx = mouseX - this.x;
+                const dy = mouseY - this.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 120) {
+                    this.x -= dx * 0.015;
+                    this.y -= dy * 0.015;
+                }
+
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.opacity;
+                ctx.fill();
+                ctx.globalAlpha = 1;
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const particleCount = Math.min(80, Math.floor((canvas.width * canvas.height) / 20000));
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function connectParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 150) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(212, 175, 55, ${0.08 * (1 - dist / 150)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            connectParticles();
+            requestAnimationFrame(animateParticles);
+        }
+
+        // Data Streams
+        function createDataStreams() {
+            const container = document.getElementById('data-streams');
+            for (let i = 0; i < 15; i++) {
+                const stream = document.createElement('div');
+                stream.className = 'data-stream';
+                stream.style.left = Math.random() * 100 + '%';
+                stream.style.animationDelay = Math.random() * 6 + 's';
+                stream.style.animationDuration = (Math.random() * 4 + 3) + 's';
+                container.appendChild(stream);
+            }
+        }
+
+        // Mouse tracking
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        // Language Toggle
+        const langToggle = document.getElementById('langToggle');
+        let isArabic = false;
+
+        langToggle.addEventListener('click', () => {
+            isArabic = !isArabic;
+            langToggle.classList.toggle('rtl', isArabic);
+            document.body.classList.toggle('rtl', isArabic);
+            document.documentElement.dir = isArabic ? 'rtl' : 'ltr';
+            document.documentElement.lang = isArabic ? 'ar' : 'en';
+
+            // Toggle text content
+            document.querySelectorAll('[data-en][data-ar]').forEach(el => {
+                el.textContent = isArabic ? el.dataset.ar : el.dataset.en;
+            });
+
+            // Toggle about sections
+            document.getElementById('about-en').classList.toggle('hidden', isArabic);
+            document.getElementById('about-ar').classList.toggle('hidden', !isArabic);
+        });
+
+        // Mobile Menu
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const closeMobileMenu = document.getElementById('closeMobileMenu');
+        const mobileMenu = document.querySelector('.mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+        });
+
+        closeMobileMenu.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+
+        // Close menu on link click
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Scroll Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Initialize
+        window.addEventListener('load', () => {
+            resizeCanvas();
+            initParticles();
+            animateParticles();
+            createDataStreams();
+        });
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            initParticles();
+        });
+
+        // Navbar background on scroll
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(5, 5, 8, 0.98)';
+                nav.style.borderBottom = '1px solid rgba(212, 175, 55, 0.1)';
+            } else {
+                nav.style.background = 'rgba(10, 10, 18, 0.8)';
+                nav.style.borderBottom = 'none';
+            }
+        });
+
+        // Add typing effect reset on language change
+        function resetTypewriter() {
+            const typewriter = document.querySelector('.typewriter');
+            if (typewriter) {
+                typewriter.style.animation = 'none';
+                setTimeout(() => {
+                    typewriter.style.animation = 'typewriter 3s steps(40) 1s forwards, blink 0.8s infinite';
+                }, 10);
+            }
+        }
+
+        langToggle.addEventListener('click', resetTypewriter);
+    </script>
+</body>
+</html>
